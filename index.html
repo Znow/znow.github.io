@@ -1,121 +1,23 @@
-<!DOCTYPE html>
-<html>
+---
+layout: default
+---
 
-  <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Znow : Web development">
+<div class="home">
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+  <h1 class="page-heading">Posts</h1>
 
-    <title>Znow</title>
-  </head>
+  <ul class="post-list">
+    {% for post in site.posts %}
+      <li>
+        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
 
-  <body>
+        <h2>
+          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+        </h2>
+      </li>
+    {% endfor %}
+  </ul>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/Znow">View on GitHub</a>
+  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
 
-          <h1 id="project_title">Znow</h1>
-          <h2 id="project_tagline">Web development</h2>
-
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h1>
-<a id="welcome" class="anchor" href="#welcome" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome</h1>
-
-<p>I will be using this as my primary blog space for tips and tricks.</p>
-
-<hr>
-
-<h2>
-<a id="ajax-pagination-with-kaminari---ruby-on-rails" class="anchor" href="#ajax-pagination-with-kaminari---ruby-on-rails" aria-hidden="true"><span class="octicon octicon-link"></span></a>AJAX pagination with Kaminari - Ruby on Rails</h2>
-
-<p>I needed a pagination feature, without the need of a full page reload.
-So I had a look at Kaminari, which is the only paging gem that seems to be active.
-All though, the default implementation of Kaminari with AJAX enabled by just doing:</p>
-
-<p><code>= paginate @users, :remote =&gt; true</code></p>
-
-<p>Didn't seem to work at all...</p>
-
-<p>Here's my implementation which is fully working. I'm using news articles as an example.</p>
-
-<h3>
-<a id="news_controllerrb" class="anchor" href="#news_controllerrb" aria-hidden="true"><span class="octicon octicon-link"></span></a><em>news_controller.rb</em>
-</h3>
-
-<div class="highlight highlight-ruby"><pre><span class="pl-k">def</span> <span class="pl-en">index</span>
-  <span class="pl-vo">@news</span> <span class="pl-k">=</span> <span class="pl-s3">News</span>.all.page(params[<span class="pl-c1">:page</span>]).per(<span class="pl-c1">10</span>)
-
-  respond_to <span class="pl-k">do </span>|<span class="pl-vo">format</span>|
-      format.html
-      format.js { render <span class="pl-c1">:layout</span> =&gt; <span class="pl-c1">false</span> }
-  <span class="pl-k">end</span>
-<span class="pl-k">end</span></pre></div>
-
-<h3>
-<a id="_-newshaml" class="anchor" href="#_-newshaml" aria-hidden="true"><span class="octicon octicon-link"></span></a>_ <em>news.haml</em>
-</h3>
-
-<div class="highlight highlight-haml"><pre>  %<span class="pl-ent">table</span><span class="pl-ent">.table.table-condensed.table-striped.table-hover</span>
-    %<span class="pl-ent">tr</span>
-      %<span class="pl-ent">th</span> Title
-      %<span class="pl-ent">th</span> Content
-    -<span class="pl-sre"> <span class="pl-vo">@news</span>.each </span><span class="pl-sre"><span class="pl-k">do</span> |n|</span>
-      %<span class="pl-ent">tr</span>
-        %<span class="pl-ent">td</span>=<span class="pl-sre"> n.title</span>
-        %<span class="pl-ent">td</span>=<span class="pl-sre"> n.content</span></pre></div>
-
-<h3>
-<a id="indexhaml" class="anchor" href="#indexhaml" aria-hidden="true"><span class="octicon octicon-link"></span></a><em>index.haml</em>
-</h3>
-
-<div class="highlight highlight-haml"><pre><span class="pl-ent">#news-table</span>
-  =<span class="pl-sre"> <span class="pl-s3">render</span> <span class="pl-s1"><span class="pl-pds">'</span>news<span class="pl-pds">'</span></span></span>
-
-<span class="pl-ent">#news-paginator</span>
-  =<span class="pl-sre"> paginate <span class="pl-vo">@news</span>, <span class="pl-c1">:remote</span> =&gt; <span class="pl-c1">true</span></span></pre></div>
-
-<h3>
-<a id="indexjserb" class="anchor" href="#indexjserb" aria-hidden="true"><span class="octicon octicon-link"></span></a><em>index.js.erb</em>
-</h3>
-
-<div class="highlight highlight-erb"><pre>$('#news-table').html('<span class="pl-pse">&lt;%=</span><span class="pl-s2"> escape_javascript(raw(render <span class="pl-s1"><span class="pl-pds">'</span>news<span class="pl-pds">'</span></span>)) </span><span class="pl-pse"><span class="pl-s2">%</span>&gt;</span>');
-$('#news-paginator').html('<span class="pl-pse">&lt;%=</span><span class="pl-s2"> escape_javascript(paginate(<span class="pl-vo">@news</span>, <span class="pl-c1">remote:</span> <span class="pl-c1">true</span>)) </span><span class="pl-pse"><span class="pl-s2">%</span>&gt;</span>');</pre></div>
-
-<p>Hope this implementation works for those that faced the same problem as I, with the default AJAX pagination not working.</p>
-
-<p>Feel free to PM me if any questions.</p>
-
-<p>Regards</p>
-      </section>
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
-              <script type="text/javascript">
-            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-          </script>
-          <script type="text/javascript">
-            try {
-              var pageTracker = _gat._getTracker("UA-60138109-1");
-            pageTracker._trackPageview();
-            } catch(err) {}
-          </script>
-
-
-  </body>
-</html>
+</div>
