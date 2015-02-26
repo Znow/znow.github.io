@@ -1,6 +1,6 @@
 ---
 layout: post
-title: AJAX pagination with Kaminari - Ruby on Rails
+title: AJAX pagination with Kaminari
 published: true
 categories: Ruby on Rails
 ---
