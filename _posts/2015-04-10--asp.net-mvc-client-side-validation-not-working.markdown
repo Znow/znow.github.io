@@ -1,8 +1,79 @@
-   ---
-   layout: post
-   title: ASP.NET MVC client side validation not working
-   published: true
-   categories: .NET
-   ---
+---
+layout: post
+title: ASP.NET MVC clientside validation not working
+published: true
+categories: .NET
+---
+
+Working on a new MVC project, I've encountered that clientside validation did not work out of the box.
+
+Debugging and doing alot of detective work, I noticed that "jqueryval" which is defined in the "BundleConfig.cs" is not appended at the bottom of the "_Layout.cshtml" file.
 
 
+* _BundleConfig.cs
+
+~~~csharp
+bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+  "~/Scripts/jquery-2.1.3.min.js",
+  "~/Scripts/jquery.unobtrusive-ajax.min.js"));
+
+bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
+  "~/Scripts/jquery.validate*"));
+~~~
+
+
+* _Layout.cshml
+
+~~~ html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site</title>
+    @Styles.Render("~/Content/admin")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    omitted...
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/custom")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+~~~
+
+All though, when generating a new "Create" view for a [HttpPost] method in the controller, it will append 
+
+* Create.cshtml
+
+~~~ csharp
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+~~~
+
+at the bottom of the view, remove it, and append 
+
+~~~ html
+@Scripts.Render("~/bundles/jqueryval")
+~~~
+
+to the bottom of _Layout.cshtml:
+
+* _Layout.cshtml
+
+~~~ html
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/bootstrap")
+@Scripts.Render("~/bundles/custom")
+@RenderSection("scripts", required: false)
+~~~
+
+
+And it should be working as shown in the screenshot below.
+
+![Clientside validation](https://dl-web.dropbox.com/get/Public/clientsidevalidation.PNG?_subject_uid=1305190&w=AABY7AkOSiXSSDKCQ0l-KedbvXW36zPq5VN2GX2rotV1rA)
