@@ -6,7 +6,7 @@ description: > # this means to ignore newlines until "baseurl:"
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://znow.github.io" # the base hostname & protocol for your site
 twitter_username: daniel_wg
-github_username:  znow
+github_username:  Znow
 host: 0.0.0.0
 
 # Build settings
