@@ -1,0 +1,8 @@
+   ---
+   layout: post
+   title: ASP.NET MVC client side validation not working
+   published: true
+   categories: .NET
+   ---
+
+
