@@ -17,7 +17,7 @@ Here's my implementation which is fully working. I'm using news articles as an e
 
 _news_controller.rb_
 
-~~~ ruby
+{% highlight ruby linenos %}
 def index
   @news = News.all.page(params[:page]).per(10)
 
@@ -26,7 +26,7 @@ def index
       format.js { render :layout => false }
   end
 end
-~~~
+{% endhighlight %}
 
 
 _ _news.haml_
