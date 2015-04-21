@@ -12,7 +12,7 @@ Debugging and doing alot of detective work, I noticed that "jqueryval" which is 
 
 * _BundleConfig.cs
 
-{% highlight csharp linenos %}
+{% highlight c# linenos %}
   bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
     "~/Scripts/jquery-2.1.3.min.js",
     "~/Scripts/jquery.unobtrusive-ajax.min.js"));
@@ -49,7 +49,7 @@ All though, when generating a new "Create" view for a [HttpPost] method in the c
 
 * Create.cshtml
 
-{% highlight csharp linenos %}
+{% highlight c# linenos %}
   @section Scripts {
       @Scripts.Render("~/bundles/jqueryval")
   }
@@ -57,7 +57,7 @@ All though, when generating a new "Create" view for a [HttpPost] method in the c
 
 at the bottom of the view, remove it, and append
 
-{% highlight razor linenos %}
+{% highlight html linenos %}
   @Scripts.Render("~/bundles/jqueryval")
 {% endhighlight %}
 
@@ -65,7 +65,7 @@ to the bottom of _Layout.cshtml:
 
 * _Layout.cshtml
 
-{% highlight razor linenos %}
+{% highlight html linenos %}
   @Scripts.Render("~/bundles/jquery")
   @Scripts.Render("~/bundles/jqueryval")
   @Scripts.Render("~/bundles/bootstrap")
