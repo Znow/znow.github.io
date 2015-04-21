@@ -2,7 +2,7 @@
 title: Znow
 email: znowm4n@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
-  
+
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://znow.github.io" # the base hostname & protocol for your site
 twitter_username: daniel_wg
@@ -14,13 +14,16 @@ markdown: kramdown
 highlighter: pygments
 permalink:   date
 
+kramdown:
+  use_coderay: true
+
 # Settings for analytics helper
 # Set 'provider' to the analytics provider you want to use.
 # Set 'provider' to false to turn analytics off globally.
-#        
+#
 analytics :
   provider : google
-  google : 
+  google :
       tracking_id : 'UA-60138109-1'
   getclicky :
     site_id :
