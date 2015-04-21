@@ -15,7 +15,19 @@ highlighter: pygments
 permalink:   date
 
 kramdown:
+  auto_ids: true
+  footnote_nr: 1
+  entity_output: as_char
+  toc_levels: 1..6
+  smart_quotes: lsquo,rsquo,ldquo,rdquo
   use_coderay: true
+
+  coderay:
+    coderay_wrap: div
+    coderay_line_numbers: true
+    coderay_tab_width: 4
+    coderay_bold_every: 10
+    coderay_css: class
 
 # Settings for analytics helper
 # Set 'provider' to the analytics provider you want to use.
