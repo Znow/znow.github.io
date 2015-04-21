@@ -1,6 +1,6 @@
 ---
 layout: post
-title: AJAX pagination with Kaminari
+title: Ruby on Rails - AJAX pagination with Kaminari
 published: true
 categories: Ruby on Rails
 ---
@@ -50,7 +50,7 @@ _index.haml_
 
 #news-paginator
   = paginate @news, :remote => true
-  
+
 ~~~
 
 _index.js.erb_
