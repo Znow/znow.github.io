@@ -7,9 +7,9 @@ categories: Ruby on Rails
 
 I needed a pagination feature, without the need of a full page reload. So I had a look at Kaminari, which is the only paging gem that seems to be active. All though, the default implementation of Kaminari with AJAX enabled by just doing:
 
-~~~ haml
+{% highlight haml linenos %}
 = paginate @users, :remote => true
-~~~
+{% endhighlight %}
 
 Didn't seem to work at all...
 
@@ -31,7 +31,7 @@ end
 
 _ _news.haml_
 
-~~~ haml
+{% highlight haml linenos %}
   %table.table.table-condensed.table-striped.table-hover
     %tr
       %th Title
@@ -40,25 +40,25 @@ _ _news.haml_
       %tr
         %td= n.title
         %td= n.content
-~~~
+{% endhighlight %}
 
 _index.haml_
 
-~~~ haml
-#news-table
-  = render 'news'
+{% highlight haml linenos %}
+  #news-table
+    = render 'news'
 
-#news-paginator
-  = paginate @news, :remote => true
+  #news-paginator
+    = paginate @news, :remote => true
 
-~~~
+{% endhighlight %}
 
 _index.js.erb_
 
-~~~ erb
-$('#news-table').html('<%= escape_javascript(raw(render 'news')) %>');
-$('#news-paginator').html('<%= escape_javascript(paginate(@news, remote: true)) %>');
-~~~
+{% highlight erb linenos %}
+  $('#news-table').html('<%= escape_javascript(raw(render 'news')) %>');
+  $('#news-paginator').html('<%= escape_javascript(paginate(@news, remote: true)) %>');
+{% endhighlight %}
 
 Hope this implementation works for those that faced the same problem as I, with the default AJAX pagination not working.
 
