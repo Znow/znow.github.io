@@ -2,6 +2,7 @@
 published: true
 layout: post
 categories: .NET
+title: ASP.NET - Entity Framework - Code-First - Update remote database
 ---
 I have the need of updating my remote database in my Azure cloud from time to time, with new migrations and seed data. 
 
