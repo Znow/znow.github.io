@@ -1,5 +1,7 @@
 ---
 published: true
+layout: post
+categories: .NET
 ---
 ## ASP.NET Entity Framework Code First - Update remote database
 
