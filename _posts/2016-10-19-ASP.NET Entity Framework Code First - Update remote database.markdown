@@ -29,4 +29,5 @@ Sets the connection information to your server, database informartion and some a
 
 When you have provided your connection information, fire the command, and you should see something as below:
 
-![]({{site.baseurl}}//Update-Database.PNG)
+![Update-Database.PNG]({{site.baseurl}}/_posts/Update-Database.PNG)
+
