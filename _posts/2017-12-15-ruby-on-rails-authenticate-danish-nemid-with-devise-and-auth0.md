@@ -26,11 +26,59 @@ The tutorial have been tested with Rails 4.2.10 and Rails 5.1.4, Ruby 2.4.3 on R
 
 Go to https://auth0.com/authenticate/rails/nemid/ and follow the guide.
 
-### 2. Add omniauth & omniauth-auth0 to Gemfile
+### 2. Devise
+
+3.1 Gemfile
+
+Add "devise" to the Gemfile as shown below:
+
+```ruby
+gem 'devise'
+```
+
+Run "bundle install" to install the newly added gem.
+
+3.2 Setup
+
+To setup Devise, we need to run the install command, which will add the needed routes for our application and create the Devise initializer that we need to configure later on. 
+We then want to create a Devise "User" model.
+
+Run the following command:
+
+```
+rails g devise:install
+```
+
+Then:
+```
+rails g devise User
+```
+
+And lastly, migrate the database:
+```
+rake db:migrate
+```
+
+We should now have a working Devise installation with a "User" model for our application.
+
+### 3. Omniauth & Omniauth-auth0
+
+3.1 Gemfile
+
+Add "omniauth" & "omniauth-auth0" to the Gemfile as shown below:
+
+```ruby
+gem 'omniauth'
+gem 'omniauth-auth0'
+```
+
+Run "bundle install" to install the newly added gems.
+
+3.2 
 
 
 
-### 3. Setup Devise
+
 
 ### 4. Setup omniauth, omniauth-auth0
 
