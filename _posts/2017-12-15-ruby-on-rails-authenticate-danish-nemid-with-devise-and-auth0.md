@@ -101,7 +101,7 @@ gem 'omniauth-auth0'
 Run "bundle install" to install the newly added gems.
 
 #### Add columns to User model
-Add
+Add 
 
 
 
@@ -118,7 +118,7 @@ Note down the alias and the password
 Click "Submit".
 
 
-## References
+## References & Inspiration
 - [https://github.com/plataformatec/devise/wiki/OmniAuth:-Overview](https://github.com/plataformatec/devise/wiki/OmniAuth:-Overview)
 - [https://www.digitalocean.com/community/tutorials/how-to-configure-devise-and-omniauth-for-your-rails-application](https://www.digitalocean.com/community/tutorials/how-to-configure-devise-and-omniauth-for-your-rails-application)
 - [https://github.com/auth0/omniauth-auth0](https://github.com/auth0/omniauth-auth0)
