@@ -125,6 +125,22 @@ And:
 rake db:migrate
 ```
 
+#### Setup in User model
+
+Locate the "User" model at:
+```ruby
+app/models/user.rb
+```
+
+Add the following to the list of devise modules:
+```ruby
+:omniauthable, omniauth_providers: %i[auth0]
+```
+
+
+
+
+
 #### Setup in Devise initializer
 Locate the Devise initializer at:
 ```ruby
