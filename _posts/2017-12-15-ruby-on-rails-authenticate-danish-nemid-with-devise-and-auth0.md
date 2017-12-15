@@ -23,9 +23,11 @@ Make sure you have a working Rails app, atleast at Rails 4.2.10.
 
 The tutorial have been tested with Rails 4.2.10 and Rails 5.1.4, Ruby 2.4.3 on RVM.
 
+
 ### 1. Register with Criipto and Auth0
 
 Go to https://auth0.com/authenticate/rails/nemid/ and follow the guide.
+
 
 ### 2. Devise
 Devise adds authentication support to our application.
@@ -65,6 +67,7 @@ rake db:migrate
 
 We should now have a working Devise installation with a "User" model for our application.
 
+
 ### 3. Omniauth & Omniauth-auth0
 
 3.1 Gemfile
@@ -79,9 +82,6 @@ gem 'omniauth-auth0'
 Run "bundle install" to install the newly added gems.
 
 3.2 
-
-
-
 
 
 ### 4. Setup omniauth, omniauth-auth0
