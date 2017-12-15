@@ -137,6 +137,15 @@ Add the following to the list of devise modules:
 :omniauthable, omniauth_providers: %i[auth0]
 ```
 
+Like so:
+```ruby
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable, :omniauthable, omniauth_providers: %i[auth0]
+```
+
+
 
 
 
@@ -160,7 +169,7 @@ _I placed it down where the OmnitAuth configuration is commented out_
 
 
 
-### 4. Setup omniauth, omniauth-auth0
+### 4. 
 
 ### 5. Create NemID test user
 
