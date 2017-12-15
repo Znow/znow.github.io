@@ -98,7 +98,7 @@ rake db:migrate
 We should now have a working Devise installation with a "User" model for our application.
 
 
-### 3. Omniauth & Omniauth-auth0
+### 3. omniauth & omniauth-auth0
 I followed the guide here for setting up the 2 gems
 
 #### Gemfile
@@ -131,7 +131,7 @@ Locate the Devise initializer at:
 config/initializers/devise.rb
 ```
 
-Add the following:
+Add the following: (Im using dotenv-rails for environment variables in development)
 ```ruby
 config.omniauth :auth0, ENV['AUTH0_CLIENT_ID'], ENV['AUTH0_CLIENT_SECRET'], ENV['AUTH0_DOMAIN'], 
     :scope => 'openid'
@@ -164,6 +164,7 @@ You should now have a test NemID user.
 - [https://www.digitalocean.com/community/tutorials/how-to-configure-devise-and-omniauth-for-your-rails-application](https://www.digitalocean.com/community/tutorials/how-to-configure-devise-and-omniauth-for-your-rails-application)
 - [https://github.com/auth0/omniauth-auth0](https://github.com/auth0/omniauth-auth0)
 - [https://auth0.com/docs/quickstart/webapp/rails](https://auth0.com/docs/quickstart/webapp/rails)
+- [https://github.com/plataformatec/devise](https://github.com/plataformatec/devise)
 
 
 
