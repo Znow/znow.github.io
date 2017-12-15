@@ -113,9 +113,11 @@ Go to https://appletk.danid.dk/testtools/ and login with user: "" and password: 
 
 Click on "Autofill" at the very bottom.
 
-Note down the alias and the password
+Note down the "alias" and the "password"
 
 Click "Submit".
+
+You should now have a test NemID user.
 
 
 ## References & Inspiration
