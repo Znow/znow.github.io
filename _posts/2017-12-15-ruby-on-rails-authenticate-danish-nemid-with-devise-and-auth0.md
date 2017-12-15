@@ -87,8 +87,9 @@ We should now have a working Devise installation with a "User" model for our app
 
 
 ### 3. Omniauth & Omniauth-auth0
+I followed the guide here for setting up the 2 gems
 
-3.1 Gemfile
+#### Gemfile
 
 Add "omniauth" & "omniauth-auth0" to the Gemfile as shown below:
 
@@ -99,7 +100,9 @@ gem 'omniauth-auth0'
 
 Run "bundle install" to install the newly added gems.
 
-3.2 
+#### Add columns to User model
+Add
+
 
 
 ### 4. Setup omniauth, omniauth-auth0
@@ -113,5 +116,7 @@ Click on "Autofill" at the very bottom.
 Note down the alias and the password
 
 Click "Submit".
+
+
 
 
