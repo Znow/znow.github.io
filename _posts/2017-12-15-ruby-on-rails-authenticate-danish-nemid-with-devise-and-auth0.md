@@ -16,6 +16,7 @@ Auth0 made a very fine starting point [here](https://auth0.com/authenticate/rail
 
 But it's not really enough, to get it working in a Rails app, so I will try to outline that in the following steps, with what I did to get everything working with Devise aswell.
 
+
 ### Prerequisites
 
 Make sure you have a working Rails app, atleast at Rails 4.2.10.
@@ -27,8 +28,9 @@ The tutorial have been tested with Rails 4.2.10 and Rails 5.1.4, Ruby 2.4.3 on R
 Go to https://auth0.com/authenticate/rails/nemid/ and follow the guide.
 
 ### 2. Devise
+Devise adds authentication support to our application.
 
-3.1 Gemfile
+#### 2.1 Gemfile
 
 Add "devise" to the Gemfile as shown below:
 
@@ -38,7 +40,7 @@ gem 'devise'
 
 Run "bundle install" to install the newly added gem.
 
-3.2 Setup
+#### 2.2 Setup
 
 To setup Devise, we need to run the install command, which will add the needed routes for our application and create the Devise initializer that we need to configure later on. 
 We then want to create a Devise "User" model.
@@ -50,11 +52,13 @@ rails g devise:install
 ```
 
 Then:
+
 ```
 rails g devise User
 ```
 
 And lastly, migrate the database:
+
 ```
 rake db:migrate
 ```
