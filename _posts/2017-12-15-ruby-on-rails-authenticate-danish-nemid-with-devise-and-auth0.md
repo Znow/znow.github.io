@@ -6,15 +6,17 @@ published: false
 ### Introduction
 
 A project that I worked on required the option to let users sign in with their "e-ID", the Danish NemID login service.
-It's used for signing in to online banking, social customer service and other stuff that require validation of the users identity.
+NemID used for signing in to online banking, social customer service and other stuff that require validation of the users identity.
 
-I used alot of time on researching different possibilities, on how to implement NemID in Ruby on Rails - and there isn't really any easy plug-and-play solution, yet.
+I used alot of time on researching different possibilities, on how to implement NemID in Ruby on Rails - and there isn't really any easy plug-and-play solution, yet. A solution was to use JRuby along with NemID's java-applet. Another solution was a custom made Devise integration.
+
+But then I stumpled upon Criipto and their integrations in Auth0.
 
 [Criipto](https://criipto.com/) (former Grean) is a supplier of a service that lets you use NemID together with [Auth0](https://auth0.com/) - and Auth0 is used for SSO(Single Sign On), and can be integrated in many languages. Criipto also has the options for use of Norwegian and Swedish login services.
 
-Auth0 made a very fine starting point [here](https://auth0.com/authenticate/rails/nemid/) on how to get up and running with their and Criipto's service.
+Auth0 made a very fine starting point [here](https://auth0.com/authenticate/rails/nemid/) and [here](https://auth0.com/docs/quickstart/webapp/rails) on how to get up and running with their and Criipto's service.
 
-But it's not really enough, to get it working in a Rails app, so I will try to outline that in the following steps, with what I did to get everything working with Devise aswell.
+But it wasn't really enough for our quest, to get it working in a Rails app with Devise aswell. So I will try to outline that in the following steps, with what I did to get everything working.
 
 
 
