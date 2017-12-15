@@ -146,7 +146,7 @@ _I placed it down where the OmnitAuth configuration is commented out_
 
 ### 5. Create NemID test user
 
-Go to https://appletk.danid.dk/testtools/ and login with user: "" and password: ""
+Go to https://appletk.danid.dk/testtools/ and login with user: "oces" and password: "nemid4all"
 
 Click on "Autofill" at the very bottom.
 
