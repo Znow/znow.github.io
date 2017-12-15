@@ -46,6 +46,16 @@ Click on the "cog" icon for "easyid-adfs-DK-NemID-POCES" to access settings for 
 
 
 
+Add callback url
+Note down api key and secret
+
+Change client settings
+
+![Auth0 OAUTH advanced settings]({{site.baseurl}}/_posts/auth0client.PNG)
+
+
+
+
 
 ### 2. Devise
 Devise adds authentication support to our application.
@@ -101,7 +111,34 @@ gem 'omniauth-auth0'
 Run "bundle install" to install the newly added gems.
 
 #### Add columns to User model
-Add 
+We want to add 2 columns to our User model, "provider" and "uid".
+
+Run the following command:
+```
+rails g migration AddOmniauthToUsers provider:string uid:string
+```
+
+And: 
+```
+rake db:migrate
+```
+
+#### Setup in Devise initializer
+Locate the Devise initializer at:
+```ruby
+config/initializers/devise.rb
+```
+
+Add the following:
+```ruby
+config.omniauth :auth0, ENV['AUTH0_CLIENT_ID'], ENV['AUTH0_CLIENT_SECRET'], ENV['AUTH0_DOMAIN'], 
+    :scope => 'openid'
+```
+
+_I placed it down where the OmnitAuth configuration is commented out_
+![Devise initializer]({{site.baseurl}}/_posts/devise.PNG)
+
+
 
 
 
