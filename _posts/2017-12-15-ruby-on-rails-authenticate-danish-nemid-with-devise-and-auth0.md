@@ -26,11 +26,9 @@ The tutorial have been tested with Rails 4.2.10 and Rails 5.1.4, Ruby 2.4.3 on R
 
 Go to https://auth0.com/authenticate/rails/nemid/ and follow the guide.
 
-### 1.1
+### 2. Add omniauth & omniauth-auth0
 
-Once you have done the 
 
-### 2. Create new Ruby on Rails app
 
 ### 3. Setup Devise
 
