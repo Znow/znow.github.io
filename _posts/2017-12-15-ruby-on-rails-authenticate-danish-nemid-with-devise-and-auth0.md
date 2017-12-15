@@ -118,5 +118,12 @@ Note down the alias and the password
 Click "Submit".
 
 
+## References
+- [https://github.com/plataformatec/devise/wiki/OmniAuth:-Overview](https://github.com/plataformatec/devise/wiki/OmniAuth:-Overview)
+- [https://www.digitalocean.com/community/tutorials/how-to-configure-devise-and-omniauth-for-your-rails-application](https://www.digitalocean.com/community/tutorials/how-to-configure-devise-and-omniauth-for-your-rails-application)
+- [https://github.com/auth0/omniauth-auth0](https://github.com/auth0/omniauth-auth0)
+- [https://auth0.com/docs/quickstart/webapp/rails](https://auth0.com/docs/quickstart/webapp/rails)
+
+
 
 
