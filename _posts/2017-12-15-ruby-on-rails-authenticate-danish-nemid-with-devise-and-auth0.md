@@ -51,7 +51,7 @@ Click on the "cog" icon for "easyid-adfs-DK-NemID-POCES" to access settings for 
 Add callback url
 Note down api key and secret
 
-Change client settings
+Change client settings:
 
 ![Auth0 OAUTH advanced settings]({{site.baseurl}}/_posts/auth0client.PNG)
 
@@ -96,6 +96,7 @@ rake db:migrate
 ```
 
 We should now have a working Devise installation with a "User" model for our application.
+
 
 
 ### 3. omniauth & omniauth-auth0
