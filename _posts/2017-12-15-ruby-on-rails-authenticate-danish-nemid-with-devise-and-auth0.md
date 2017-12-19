@@ -31,11 +31,11 @@ The tutorial have been tested with Rails 4.2.10 and Rails 5.1.4, Ruby 2.4.3 on R
 
 Go to https://auth0.com/authenticate/rails/nemid/ and follow the guide.
 
-#### Configure Auth0 connection
+#### Configure Auth0
 
 Log in to your Auth0 account
 
-Click on "Connections" -> "Enterprise", so you see the below:
+Click on "Connections" -> "Enterprise", you should see the same as below:
 ![auth0]({{site.baseurl}}/_posts/auth0.PNG)
 
 Click on "ADFS" or the icon with the bullet lines
