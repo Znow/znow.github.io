@@ -153,7 +153,7 @@ Locate the "User" model at:
 app/models/user.rb
 ```
 
-Add the following to the list of devise modules to enable the use of omniauth and omniauth-auth0:
+Add the following to the list of devise modules to enable the use of **"omniauth"** and **"omniauth-auth0"**:
 ```ruby
 :omniauthable, omniauth_providers: %i[auth0]
 ```
@@ -167,7 +167,7 @@ Like so:
 ```
 
 
-Add the following two methods
+Add the following two methods which are pretty self explanatory:
 
 ```ruby
   def self.from_omniauth(auth)
@@ -229,6 +229,7 @@ You should now have a test NemID user.
 ## References & Inspiration
 - [https://github.com/plataformatec/devise/wiki/OmniAuth:-Overview](https://github.com/plataformatec/devise/wiki/OmniAuth:-Overview)
 - [https://www.digitalocean.com/community/tutorials/how-to-configure-devise-and-omniauth-for-your-rails-application](https://www.digitalocean.com/community/tutorials/how-to-configure-devise-and-omniauth-for-your-rails-application)
+- [https://github.com/omniauth/omniauth](https://github.com/omniauth/omniauth)
 - [https://github.com/auth0/omniauth-auth0](https://github.com/auth0/omniauth-auth0)
 - [https://auth0.com/docs/quickstart/webapp/rails](https://auth0.com/docs/quickstart/webapp/rails)
 - [https://github.com/plataformatec/devise](https://github.com/plataformatec/devise)
