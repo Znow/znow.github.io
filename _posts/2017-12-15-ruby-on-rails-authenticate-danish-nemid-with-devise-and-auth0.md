@@ -1,9 +1,9 @@
 ---
 published: false
 ---
-## Ruby on Rails - Authenticate Danish NemID with Devise and Auth0
+# Ruby on Rails - Authenticate Danish NemID with Devise and Auth0
 
-### Introduction
+## Introduction
 
 A project that I worked on required the option to let users sign in with their "e-ID", the Danish NemID login service.
 NemID used for signing in to online banking, social customer service and other stuff that require validation of the users identity.
@@ -21,17 +21,17 @@ But it wasn't really enough for our quest, to get it working in a Rails app with
 
 
 
-### Prerequisites
+## Prerequisites
 
 Make sure you have a working Rails app, atleast at Rails 4.2.10.
 
 The tutorial have been tested with Rails 4.2.10 and Rails 5.1.4, Ruby 2.4.3 on RVM.
 
-### 1. Register with Criipto and Auth0
+## 1. Register with Criipto and Auth0
 
 Go to https://auth0.com/authenticate/rails/nemid/ and follow the guide.
 
-#### Configure Auth0 connection
+### Configure Auth0 connection
 
 Log in to your Auth0 account
 
@@ -50,7 +50,7 @@ In here you can provide the email domains that should be allowed to use for the 
 
 Hit "Save", and close the dialog.
 
-#### Configure Auth0 client
+### Configure Auth0 client
 
 If you have followed the guide that I linked to above, it should also have made a web application as a client in Auth0 for you. We need to configure this, with a callback URL and some other settings.
 
@@ -79,10 +79,10 @@ We want to disable the **"OIDC Conformant"** for our scenario, because with this
 Hit "Save Changes".
 
 
-### 2. Devise
+## 2. Devise
 Devise adds authentication support to our application.
 
-#### Gemfile
+### Gemfile
 
 Add "devise" to the Gemfile as shown below:
 
@@ -92,7 +92,7 @@ gem 'devise'
 
 Run "bundle install" to install the newly added gem.
 
-#### Setup
+### Setup
 
 To setup Devise, we need to run the install command, which will add the needed routes for our application and create the Devise initializer that we need to configure later on. 
 We then want to create a Devise "User" model.
@@ -119,10 +119,10 @@ We should now have a working Devise installation with a "User" model for our app
 
 
 
-### 3. Omniauth & omniauth-auth0
+## 3. Omniauth & omniauth-auth0
 Omniauth enables other providers to be used for authentication, like Facebook, Google etc. Here we will also use the **"omniauth-auth0"** gem for Auth0 authentication. Omniauth integrates very well with Devise, which we just did setup.
 
-#### Gemfile
+### Gemfile
 
 Add "omniauth" & "omniauth-auth0" to the Gemfile as shown below:
 
@@ -133,7 +133,7 @@ gem 'omniauth-auth0'
 
 Run "bundle install" to install the newly added gems.
 
-#### Add columns to User model
+### Add columns to User model
 We want to add 2 columns to our User model, "provider" and "uid" to store information on how the user did authenticate.
 
 Run the following command:
@@ -146,7 +146,7 @@ And:
 rake db:migrate
 ```
 
-#### Setup in User model
+### Setup in User model
 
 Locate the "User" model at:
 ```ruby
@@ -192,7 +192,7 @@ Add the following two methods which are pretty self explanatory:
 ```
 
 
-#### Setup in Devise initializer
+### Setup in Devise initializer
 Locate the Devise initializer at:
 ```ruby
 config/initializers/devise.rb
@@ -211,9 +211,11 @@ _I placed it down where the OmnitAuth configuration is commented out_
 
 
 
-### 4. 
+## 4. Setup environment variables
 
-### 5. Create NemID test user
+## 5. Setup views
+
+## 6. Create NemID test user
 
 Go to https://appletk.danid.dk/testtools/ and login with user: "oces" and password: "nemid4all"
 
