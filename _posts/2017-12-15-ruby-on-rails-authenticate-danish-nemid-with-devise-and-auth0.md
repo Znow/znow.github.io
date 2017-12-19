@@ -233,7 +233,3 @@ You should now have a test NemID user.
 - [https://github.com/auth0/omniauth-auth0](https://github.com/auth0/omniauth-auth0)
 - [https://auth0.com/docs/quickstart/webapp/rails](https://auth0.com/docs/quickstart/webapp/rails)
 - [https://github.com/plataformatec/devise](https://github.com/plataformatec/devise)
-
-
-
-
