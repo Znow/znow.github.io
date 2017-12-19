@@ -62,7 +62,7 @@ Find the client that was created, and click the "cog" icon at the right to acces
 ![auth0clients.PNG]({{site.baseurl}}/_posts/auth0clients.PNG)
 
 
-In here we want to notice the "Client ID", and the "Client Secret", which we need to store in our environment variables later on.
+In here we want to notice the **"Client ID"**, and the **"Client Secret"**, which we need to store in our environment variables later on.
 
 We also want to add our callback URL, which is the URL of the _omniauth_callbacks_controller.rb_ controller we will be creating very soon.
 
@@ -70,13 +70,13 @@ We also want to add our callback URL, which is the URL of the _omniauth_callback
 
 Further down the page, there is a link for "Advanced Settings", click that, and find the "OAuth" tab.
 
-We want to disable the "OIDC Conformant" for our scenario, because with this enabled, it will hide the values that would be shown in the results that we need from the NemID authentication service. This includes the CPR among other things.
+We want to disable the **"OIDC Conformant"** for our scenario, because with this enabled, it will hide the values that would be shown in the results that we need from the NemID authentication service. This includes the CPR among other things.
 
 
 ![Auth0 OAUTH advanced settings]({{site.baseurl}}/_posts/auth0client.PNG)
 
 
-
+Hit "Save Changes".
 
 
 ### 2. Devise
