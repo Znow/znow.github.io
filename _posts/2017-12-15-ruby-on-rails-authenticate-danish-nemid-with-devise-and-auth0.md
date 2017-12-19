@@ -119,8 +119,8 @@ We should now have a working Devise installation with a "User" model for our app
 
 
 
-### 3. omniauth & omniauth-auth0
-I followed the guide here for setting up the 2 gems
+### 3. Omniauth & omniauth-auth0
+Omniauth enables other providers to be used for authentication, like Facebook, Google etc. Here we will also use the **"omniauth-auth0"** gem for Auth0 authentication. Omniauth integrates very well with Devise, which we just did setup.
 
 #### Gemfile
 
@@ -134,7 +134,7 @@ gem 'omniauth-auth0'
 Run "bundle install" to install the newly added gems.
 
 #### Add columns to User model
-We want to add 2 columns to our User model, "provider" and "uid".
+We want to add 2 columns to our User model, "provider" and "uid" to store information on how the user did authenticate.
 
 Run the following command:
 ```
@@ -153,7 +153,7 @@ Locate the "User" model at:
 app/models/user.rb
 ```
 
-Add the following to the list of devise modules:
+Add the following to the list of devise modules to enable the use of omniauth and omniauth-auth0:
 ```ruby
 :omniauthable, omniauth_providers: %i[auth0]
 ```
