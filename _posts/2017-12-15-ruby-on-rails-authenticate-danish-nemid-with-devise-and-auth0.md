@@ -31,7 +31,7 @@ The tutorial have been tested with Rails 4.2.10 and Rails 5.1.4, Ruby 2.4.3 on R
 
 Go to https://auth0.com/authenticate/rails/nemid/ and follow the guide.
 
-#### Configure Auth0
+#### Configure Auth0 connection
 
 Log in to your Auth0 account
 
@@ -44,14 +44,34 @@ Click on "ADFS" or the icon with the bullet lines
 You should now see this popup:
 ![ADFS]({{site.baseurl}}/_posts/adfs2.PNG)
 
-Click on the "cog" icon for "easyid-adfs-DK-NemID-POCES" to access settings for this tenant.
+Click on the "cog" icon for "easyid-adfs-DK-NemID-POCES" to access settings for this tenant. (The name might differ from what you have chosen).
+
+In here you can provide the email domains that should be allowed to use for the login services. I just used "@gmail.com" for now.
+
+Hit "Save", and close the dialog.
+
+#### Configure Auth0 client
+
+If you have followed the guide that I linked to above, it should also have made a web application as a client in Auth0 for you. We need to configure this, with a callback URL and some other settings.
 
 
+Click on "Clients" in the left sidebar menu.
 
-Add callback url
-Note down api key and secret
+Find the client that was created, and click the "cog" icon at the right to access the settings.
 
-Change client settings:
+![auth0clients.PNG]({{site.baseurl}}/_posts/auth0clients.PNG)
+
+
+In here we want to notice the "Client ID", and the "Client Secret", which we need to store in our environment variables later on.
+
+We also want to add our callback URL, which is the URL of the _omniauth_callbacks_controller.rb_ controller we will be creating very soon.
+
+![auth0clientsettings.PNG]({{site.baseurl}}/_posts/auth0clientsettings.PNG)
+
+Further down the page, there is a link for "Advanced Settings", click that, and find the "OAuth" tab.
+
+We want to disable the "OIDC Conformant" for our scenario, because with this enabled, it will hide the values that would be shown in the results that we need from the NemID authentication service. This includes the CPR among other things.
+
 
 ![Auth0 OAUTH advanced settings]({{site.baseurl}}/_posts/auth0client.PNG)
 
