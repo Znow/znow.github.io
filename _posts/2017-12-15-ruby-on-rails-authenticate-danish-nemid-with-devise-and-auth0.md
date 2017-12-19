@@ -209,13 +209,9 @@ _I placed it down where the OmnitAuth configuration is commented out_
 
 
 
+## 4. Setup views
 
-
-## 4. Setup environment variables
-
-## 5. Setup views
-
-## 6. Create NemID test user
+## 5. Create NemID test user
 
 Go to https://appletk.danid.dk/testtools/ and login with user: "oces" and password: "nemid4all"
 
@@ -226,6 +222,8 @@ Note down the "alias" and the "password"
 Click "Submit".
 
 You should now have a test NemID user.
+
+## 6. Test!
 
 
 ## References & Inspiration
