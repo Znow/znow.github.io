@@ -209,7 +209,14 @@ _I placed it down where the OmnitAuth configuration is commented out_
 
 
 
-## 4. Setup views
+## 4. Setup controller & view
+I just created a basic "Home" controller with a view, where I put the following:
+
+```html
+<%= current_user.inspect %>
+
+<%= link_to "Sign in with NemID", user_auth0_omniauth_authorize_path %>
+```
 
 
 ## 5. Create NemID test user
@@ -227,7 +234,15 @@ You should now have a test NemID user.
 ## 6. Test!
 
 
+
+Hope this helps those who had the same hard challenge as me.
+Please leave a comment below if you have any troubles or changes to this guide.
+
+
+
 ## References & Inspiration
+- [https://criipto.com/](https://criipto.com/)
+- [https://auth0.com/](https://auth0.com/)
 - [https://github.com/plataformatec/devise/wiki/OmniAuth:-Overview](https://github.com/plataformatec/devise/wiki/OmniAuth:-Overview)
 - [https://www.digitalocean.com/community/tutorials/how-to-configure-devise-and-omniauth-for-your-rails-application](https://www.digitalocean.com/community/tutorials/how-to-configure-devise-and-omniauth-for-your-rails-application)
 - [https://github.com/omniauth/omniauth](https://github.com/omniauth/omniauth)
