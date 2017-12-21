@@ -6,9 +6,9 @@ published: false
 ## Introduction
 
 A project that I worked on required the option to let users sign in with their "e-ID", the Danish NemID login service.
-NemID used for signing in to online banking, social customer service and other stuff that require validation of the users identity.
+NemID is used for signing in to online banking, social customer service and other stuff that require validation of the users identity.
 
-I used alot of time on researching different possibilities, on how to implement NemID in Ruby on Rails - and there isn't really any easy plug-and-play solution, yet. A solution was to use JRuby along with NemID's java-applet. Another solution was a custom made Devise integration.
+I used alot of time on researching different possibilities, on how to implement NemID in Ruby on Rails - and there isn't really any easy plug-and-play solution, yet. One solution was to use JRuby along with NemID's java-applet. Another solution was a custom made Devise integration.
 
 But then I stumpled upon Criipto and their integrations in Auth0.
 
@@ -29,7 +29,7 @@ The tutorial have been tested with Rails 4.2.10 and Rails 5.1.4, Ruby 2.4.3 on R
 
 ## 1. Register with Criipto and Auth0
 
-Go to https://auth0.com/authenticate/rails/nemid/ and follow the guide.
+Go to [https://auth0.com/authenticate/rails/nemid/](https://auth0.com/authenticate/rails/nemid/) and follow the guide.
 
 ### Configure Auth0 connection
 
@@ -189,7 +189,7 @@ Add the following two methods which are pretty self explanatory:
   end
 ```
 
-I added a fallback to the "user.email", since we don't always get an email when login with NemID - only when login with "employee signature" through NemID we get a email. And Devise won't allow us to create a user without a email.
+I added a fallback to the "user.email", since we don't always get an emailaddress when signin in with NemID - only when signin in with "employee signature" through NemID we would get an emailaddress. And Devise won't allow us to create a user without a emailaddress.
 
 
 ### Setup in Devise initializer
