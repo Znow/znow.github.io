@@ -246,6 +246,8 @@ Fire up your Rails application, and you should see a link "Sign in with NemID", 
 Hope this tutorial helps those who had the same hard challenge as me.
 Please leave a comment below if you have any troubles or changes to this guide, or if I have missed anything important.
 
+The sample app is available here: [https://github.com/Znow/devise_auth0](https://github.com/Znow/devise_auth0)
+
 
 
 ## References & Inspiration
