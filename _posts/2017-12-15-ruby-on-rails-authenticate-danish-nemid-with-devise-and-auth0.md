@@ -235,8 +235,8 @@ You should now have a test NemID user.
 
 
 
-Hope this helps those who had the same hard challenge as me.
-Please leave a comment below if you have any troubles or changes to this guide.
+Hope this tutorial helps those who had the same hard challenge as me.
+Please leave a comment below if you have any troubles or changes to this guide, or if I have missed anything important.
 
 
 
