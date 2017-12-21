@@ -172,10 +172,8 @@ Add the following two methods which are pretty self explanatory:
 ```ruby
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-      user.email = auth.info.email
+      user.email = auth.info.email || "#{Devise.friendly_token[0,8]}@#{Devise.friendly_token[0,8]}.com"
       user.password = Devise.friendly_token[0,20]
-      user.provider = auth.provider
-      user.uid = auth.uid
       # If you are using confirmable and the provider(s) you use validate emails, 
       # uncomment the line below to skip the confirmation emails.
       # user.skip_confirmation!
@@ -190,6 +188,8 @@ Add the following two methods which are pretty self explanatory:
     end
   end
 ```
+
+I added a fallback to the "user.email", since we don't always get an email when login with NemID - only when login with "employee signature" through NemID we get a email. And Devise won't allow us to create a user without a email.
 
 
 ### Setup in Devise initializer
@@ -210,6 +210,7 @@ _I placed it down where the OmnitAuth configuration is commented out_
 
 
 ## 4. Setup views
+
 
 ## 5. Create NemID test user
 
