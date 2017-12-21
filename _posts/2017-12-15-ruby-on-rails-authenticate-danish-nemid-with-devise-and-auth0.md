@@ -214,9 +214,12 @@ I just created a basic "Home" controller with a view, where I put the following:
 
 ```html
 <%= current_user.inspect %>
-
+<br/>
 <%= link_to "Sign in with NemID", user_auth0_omniauth_authorize_path %>
 ```
+
+I want to be able to inspect the _"current_user"_ object from Devise, when I have signed in.
+
 
 
 ## 5. Create NemID test user
@@ -225,13 +228,18 @@ Go to https://appletk.danid.dk/testtools/ and login with user: "oces" and passwo
 
 Click on "Autofill" at the very bottom.
 
-Note down the "alias" and the "password"
+Note down the "CPR", "alias" and "password"
 
 Click "Submit".
 
 You should now have a test NemID user.
 
+
+
 ## 6. Test!
+Fire up your Rails application, and you should see a link "Sign in with NemID", it will prompt you a email.
+
+![nemid.gif]({{site.baseurl}}/_posts/nemid.gif)
 
 
 
@@ -242,6 +250,7 @@ Please leave a comment below if you have any troubles or changes to this guide, 
 
 ## References & Inspiration
 - [https://criipto.com/](https://criipto.com/)
+[https://www.grean.id/](https://www.grean.id/)
 - [https://auth0.com/](https://auth0.com/)
 - [https://github.com/plataformatec/devise/wiki/OmniAuth:-Overview](https://github.com/plataformatec/devise/wiki/OmniAuth:-Overview)
 - [https://www.digitalocean.com/community/tutorials/how-to-configure-devise-and-omniauth-for-your-rails-application](https://www.digitalocean.com/community/tutorials/how-to-configure-devise-and-omniauth-for-your-rails-application)
