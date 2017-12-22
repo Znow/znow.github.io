@@ -38,7 +38,7 @@ Go to [https://auth0.com/authenticate/rails/nemid/](https://auth0.com/authentica
 Log in to your Auth0 account
 
 Click on "Connections" -> "Enterprise", you should see the same as below:
-![auth0]({{site.baseurl}}/_posts/auth0.PNG)
+![auth0]({{site.siteurl}}/_posts/auth0.PNG)
 
 Click on "ADFS" or the icon with the bullet lines
 ![ADFS]({{site.baseurl}}/_posts/adfs.PNG)
