@@ -10,6 +10,9 @@ twitter_username: daniel_wg
 github_username:  Znow
 host: 0.0.0.0
 
+plugins:
+  - jekyll-seo-tag
+
 # Build settings
 markdown: kramdown
 highlighter: pygments
@@ -24,9 +27,9 @@ kramdown:
 # Set 'provider' to the analytics provider you want to use.
 # Set 'provider' to false to turn analytics off globally.
 #
-analytics :
-  provider : google
-  google :
-      tracking_id : 'UA-60138109-1'
-  getclicky :
-    site_id :
+analytics:
+  provider: google
+  google:
+      tracking_id: 'UA-60138109-1'
+  getclicky:
+    site_id:
