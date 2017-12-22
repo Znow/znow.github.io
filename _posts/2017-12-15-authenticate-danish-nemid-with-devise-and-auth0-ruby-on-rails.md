@@ -38,13 +38,13 @@ Go to [https://auth0.com/authenticate/rails/nemid/](https://auth0.com/authentica
 Log in to your Auth0 account
 
 Click on "Connections" -> "Enterprise", you should see the same as below:
-![auth0]({{site.siteurl}}/_posts/auth0.PNG)
+![auth0]({{site.baseurl}}/assets/auth0.PNG)
 
 Click on "ADFS" or the icon with the bullet lines
-![ADFS]({{site.baseurl}}/_posts/adfs.PNG)
+![ADFS]({{site.baseurl}}/assets/adfs.PNG)
 
 You should now see this popup:
-![ADFS]({{site.baseurl}}/_posts/adfs2.PNG)
+![ADFS]({{site.baseurl}}/assets/adfs2.PNG)
 
 Click on the "cog" icon for "easyid-adfs-DK-NemID-POCES" to access settings for this tenant. (The name might differ from what you have chosen).
 
@@ -61,21 +61,21 @@ Click on "Clients" in the left sidebar menu.
 
 Find the client that was created, and click the "cog" icon at the right to access the settings.
 
-![auth0clients.PNG]({{site.baseurl}}/_posts/auth0clients.PNG)
+![auth0clients.PNG]({{site.baseurl}}/assets/auth0clients.PNG)
 
 
 In here we want to notice the **"Client ID"**, and the **"Client Secret"**, which we need to store in our environment variables later on.
 
 We also want to add our callback URL, which is the URL of the _omniauth_callbacks_controller.rb_ controller we will be creating very soon.
 
-![auth0clientsettings.PNG]({{site.baseurl}}/_posts/auth0clientsettings.PNG)
+![auth0clientsettings.PNG]({{site.baseurl}}/assets/auth0clientsettings.PNG)
 
 Further down the page, there is a link for "Advanced Settings", click that, and find the "OAuth" tab.
 
 We want to disable the **"OIDC Conformant"** for our scenario, because with this enabled, it will hide the values that would be shown in the results that we need from the NemID authentication service. This includes the CPR among other things.
 
 
-![Auth0 OAUTH advanced settings]({{site.baseurl}}/_posts/auth0client.PNG)
+![Auth0 OAUTH advanced settings]({{site.baseurl}}/assets/auth0client.PNG)
 
 
 Hit "Save Changes".
@@ -207,7 +207,7 @@ config.omniauth :auth0, ENV['AUTH0_CLIENT_ID'], ENV['AUTH0_CLIENT_SECRET'], ENV[
 ```
 
 _I placed it down where the OmnitAuth configuration is commented out_
-![Devise initializer]({{site.baseurl}}/_posts/devise.PNG)
+![Devise initializer]({{site.baseurl}}/assets/devise.PNG)
 
 
 
@@ -241,7 +241,7 @@ You should now have a test NemID user.
 ## 6. Test!
 Fire up your Rails application, and you should see a link "Sign in with NemID", it will prompt you a email.
 
-![nemid.gif]({{site.baseurl}}/_posts/nemid.gif)
+![nemid.gif]({{site.baseurl}}/assets/nemid.gif)
 
 
 
