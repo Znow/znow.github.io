@@ -10,8 +10,8 @@ twitter_username: daniel_wg
 github_username:  Znow
 host: 0.0.0.0
 
-plugins:
-  - jekyll-seo-tag
+#plugins:
+  #- jekyll-seo-tag
 
 # Build settings
 markdown: kramdown
