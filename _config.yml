@@ -33,3 +33,5 @@ analytics:
       tracking_id: 'UA-60138109-1'
   getclicky:
     site_id:
+
+theme: jekyll-theme-midnight
