@@ -45,6 +45,8 @@ if (!appClientId.IsNullOrWhiteSpace())
 }
 ```
 
+Be sure to run your DbMigrator project to update your database with the new client defined above. Else our Flutter app will not be able to authenticate and use the API endpoints.
+
 ### Setup Flutter App
 
 We need to add the "flutter_appauth" package from this repository https://github.com/MaikuB/flutter_appauth in the dependencies section in the pubspec file, as shown below:
@@ -60,7 +62,7 @@ dependencies:
 
 Next we will create a view with our auth functionality:
 
-_YourApp/lib/auth.dart_
+_YourApp/lib/ui/view/auth/auth.dart_
 
 ```dart
 import 'dart:convert';
@@ -224,3 +226,34 @@ class _AuthState extends State<Auth> {
 
 ```
 
+Next up we will create a simple widget with a button, that can handle the above login action:
+
+_YourApp/lib/ui/view/auth/widgets/login.dart_
+
+```dart
+  
+import 'package:flutter/material.dart';
+
+class Login extends StatelessWidget {
+  final loginAction;
+  final String loginError;
+
+  const Login(this.loginAction, this.loginError);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        RaisedButton(
+          onPressed: () {
+            loginAction();
+          },
+          child: Text('Login'),
+        ),
+        Text(loginError ?? ''),
+      ],
+    );
+  }
+}
+```
