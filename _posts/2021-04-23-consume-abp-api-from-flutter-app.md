@@ -27,7 +27,7 @@ _YourProject.Domain/IdentityServer/IdentityServerDataSeedContributor.cs_
 Add the below code after the last "Swagger Client", as shown below:
 
 ```csharp
- Flutter App Client
+// Flutter App Client
 var appClientId = configurationSection["YourProjectApi_App:ClientId"];
 if (!appClientId.IsNullOrWhiteSpace())
 {
