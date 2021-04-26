@@ -3,17 +3,17 @@ published: true
 ---
 # Consume ABP API from Flutter App
 
-If you are using the [ABP Framework ](https://abp.io "ABP Framework ") and want to consume it in your Flutter application, please read further where I will give a guide on how to implement the changes needed in your application.
+If you are using the [ABP Framework ](https://abp.io "ABP Framework ") and want to consume it in your Flutter application, please read further where I will give a short guide on how to implement the changes needed in your application.
 
 I will not go in much detail about the actual Flutter code implementation neither the ABP implemnentation.
 
 ## Requirements
-* Existing ABP API project
+* Existing ABP API project with IdentityServer
 * Existing Flutter application
 
 ## Setup API
 
-First we need to setup our backend project, to enable another client, that is allowed to consume the API endpoints and thus make requests. Since we are using our DbMigrator to setup clients initially, we also need to add the new client from it's appsettings.
+First we need to setup our backend project, to enable another client, that is allowed to consume the API endpoints and thus make requests. Since we are using our YourProject.DbMigrator project to setup clients initially, we also need to add the new client from it's appsettings.
 
 _YourProject.DbMigrator/appsettings.json_
 
@@ -265,4 +265,5 @@ With the above code implementation, we can now run our app in an Android emulato
 ## Notes
 
 Getting connection issues? Be sure that your SSL certificate is trusted if using https.
-Other? Please send me a message, and I will get back to you.
+
+If any questions/thoughts/ideas/changes - Please send me a message, and I will get back to you.
