@@ -3,7 +3,7 @@ published: true
 ---
 # Consume ABP API from Flutter App
 
-If you are using the [ABP Framework ](https://abp.io "ABP Framework ") and want to consume it in your Flutter application, please read further where I will give a short guide on how to implement the changes needed in your application.
+If you are using the [ABP Framework ](https://abp.io "ABP Framework ") and want to authenticate and consume it in your Flutter application, please read further where I will give a short guide on how to implement the changes needed in your application.
 
 I will not go in much detail about the actual Flutter code implementation neither the ABP implemnentation.
 
