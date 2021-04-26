@@ -19,7 +19,7 @@ First we need to setup our backend project, to enable another client, that is al
 
 Remember to change "YourProject" with the right name of your project ;-)
 
-_YourProject.DbMigrator/appsettings.json_
+**YourProject.DbMigrator/appsettings.json**
 
 Add the below code to the "IdentityServer" "Clients" section:
 
@@ -32,7 +32,7 @@ Add the below code to the "IdentityServer" "Clients" section:
 }
 ```
 
-_YourProject.Domain/IdentityServer/IdentityServerDataSeedContributor.cs_
+**YourProject.Domain/IdentityServer/IdentityServerDataSeedContributor.cs**
 
 Add the below code after the last "Swagger Client", as shown below:
 
@@ -63,7 +63,7 @@ Remember to change "YourProject" with the right name of your project ;-)
 
 We need to add the "flutter_appauth" package from this repository https://github.com/MaikuB/flutter_appauth in the dependencies section in the pubspec file, as shown below:
 
-_YourApp/pubspec.yaml_
+**YourApp/pubspec.yaml**
 
 ```yaml
 dependencies:
@@ -74,7 +74,7 @@ dependencies:
 
 Next up we will create a simple widget with a button, that can handle the upcoming login action:
 
-_YourApp/lib/ui/view/auth/widgets/login.dart_
+**YourApp/lib/ui/view/auth/widgets/login.dart**
 
 ```dart
   
@@ -106,7 +106,7 @@ class Login extends StatelessWidget {
 
 Next we will create a model for use in our auth:
 
-_YourApp/lib/core/models/yourapi_api.dart_
+**YourApp/lib/core/models/yourapi_api.dart**
 
 ```dart
 import 'dart:convert';
@@ -151,7 +151,7 @@ class YourProjectAPI {
 
 Next we will create a view with our auth functionality:
 
-_YourApp/lib/ui/view/auth/auth.dart_
+**YourApp/lib/ui/view/auth/auth.dart**
 
 ```dart
 import 'dart:convert';
@@ -309,7 +309,9 @@ class _AuthState extends State<Auth> {
 
 ## Test
 
-With the above code implementation, we can now run our app in an Android emulator, and we should be able to have a login screen shown, when clicking on the "Login" button, and thus being able to login and being sent back to the app!
+With the above code implementation, we can now run our app in an Android emulator, and we should be able to have a login screen shown.
+
+When clicking on the "Login" button, a browser should open with a our well known login screen from the API project - and then let us login and be sent back to the app!
 
 ![login](https://user-images.githubusercontent.com/265719/116081653-d134b980-a69a-11eb-90ae-0049d31e730b.gif)
 
