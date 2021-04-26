@@ -15,6 +15,8 @@ I will not go in much detail about the actual Flutter code implementation neithe
 
 First we need to setup our backend project, to enable another client, that is allowed to consume the API endpoints and thus make requests. Since we are using our YourProject.DbMigrator project to setup clients initially, we also need to add the new client from it's appsettings.
 
+Remember to change "YourProject" with the right name of your project ;-)
+
 _YourProject.DbMigrator/appsettings.json_
 
 Add the below code to the "IdentityServer" "Clients" section:
@@ -54,6 +56,8 @@ if (!appClientId.IsNullOrWhiteSpace())
 Be sure to run your DbMigrator project to update your database with the new client defined above. Else our Flutter app will not be able to authenticate and use the API endpoints.
 
 ## Setup Flutter App
+
+Remember to change "YourProject" with the right name of your project ;-)
 
 We need to add the "flutter_appauth" package from this repository https://github.com/MaikuB/flutter_appauth in the dependencies section in the pubspec file, as shown below:
 
@@ -98,6 +102,51 @@ class Login extends StatelessWidget {
 }
 ```
 
+Next we will create a model for use in our auth:
+
+_YourApp/lib/core/models/yourapi_api.dart_
+
+```dart
+import 'dart:convert';
+import 'dart:io';
+import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
+
+
+class YourProjectAPI {
+  static String accessToken;
+  static const String _baseUrl =
+      "https://your-api/api";
+  static Map<String, String> headers = {
+    'Content-type': 'application/json',
+    'Accept': 'application/json',
+    HttpHeaders.authorizationHeader: "Bearer $accessToken",
+  };
+
+  static Future<Response> getUserDetails() async {
+    final url = '$_baseUrl/identity/my-profile';
+    final response = await http.get(
+      url,
+      headers: {HttpHeaders.authorizationHeader: "Bearer $accessToken"},
+    );
+
+    return response;
+  }
+
+  // Example API method call
+  static Future<List<User>> getUsers() async {
+    final response = await http.get("$_baseUrl/identity/users", headers: headers);
+
+    
+    if (response.statusCode == 200) {
+      // Logic here       
+    }
+    return response;
+  }
+}
+
+```
+
 Next we will create a view with our auth functionality:
 
 _YourApp/lib/ui/view/auth/auth.dart_
@@ -109,6 +158,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:yourapp/ui/view/auth/widgets/login.dart';
+import 'package:yourapp/core/models/yourprojectapi_api.dart';
 
 final FlutterAppAuth appAuth = FlutterAppAuth();
 final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
