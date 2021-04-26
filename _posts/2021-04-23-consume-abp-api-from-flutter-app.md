@@ -5,7 +5,9 @@ published: true
 
 If you are using the [ABP Framework ](https://abp.io "ABP Framework ") and want to authenticate and consume it in your Flutter application, please read further where I will give a short guide on how to implement the changes needed in your application.
 
-I will not go in much detail about the actual Flutter code implementation neither the ABP implemnentation.
+I will not go in much detail about the actual Flutter code implementation neither the ABP implemnentation, as this is a simple example of how it can be done.
+
+Nor can I be held responsible for any bugs, breaches or unaware use of packages.
 
 ## Requirements
 * Existing ABP API project with IdentityServer
