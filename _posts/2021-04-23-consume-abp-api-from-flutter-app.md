@@ -1,11 +1,17 @@
 ---
 published: false
 ---
-## Consume ABP API from Flutter App
+# Consume ABP API from Flutter App
 
 If you are using the [ABP Framework ](https://abp.io "ABP Framework ") and want to consume it in your Flutter application, please read further where I will give a guide on how to implement the changes needed in your application.
 
-### Setup API
+I will not go in much detail about the actual Flutter code implementation neither the ABP implemnentation.
+
+## Requirements
+* Existing ABP API project
+* Existing Flutter application
+
+## Setup API
 
 First we need to setup our backend project, to enable another client, that is allowed to consume the API endpoints and thus make requests. Since we are using our DbMigrator to setup clients initially, we also need to add the new client from it's appsettings.
 
@@ -17,7 +23,7 @@ Add the below code to the "IdentityServer" "Clients" section:
 "YourProjectApi_App": {
   "ClientId": "YourProjectApi_App",
   "ClientSecret": "SomeSecretValue",
-  "RootUrl": "https://your-api"
+  "RootUrl": "https://localhost:44349"
   // RootUrl = "AuthServer:Authority": "https://localhost:44349" in appsettings.json HttpApi.Host project
 }
 ```
@@ -47,7 +53,7 @@ if (!appClientId.IsNullOrWhiteSpace())
 
 Be sure to run your DbMigrator project to update your database with the new client defined above. Else our Flutter app will not be able to authenticate and use the API endpoints.
 
-### Setup Flutter App
+## Setup Flutter App
 
 We need to add the "flutter_appauth" package from this repository https://github.com/MaikuB/flutter_appauth in the dependencies section in the pubspec file, as shown below:
 
@@ -60,6 +66,38 @@ dependencies:
   flutter_appauth: ^0.9.1
 ```
 
+Next up we will create a simple widget with a button, that can handle the upcoming login action:
+
+_YourApp/lib/ui/view/auth/widgets/login.dart_
+
+```dart
+  
+import 'package:flutter/material.dart';
+
+class Login extends StatelessWidget {
+  final loginAction;
+  final String loginError;
+
+  const Login(this.loginAction, this.loginError);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        RaisedButton(
+          onPressed: () {
+            loginAction();
+          },
+          child: Text('Login'),
+        ),
+        Text(loginError ?? ''),
+      ],
+    );
+  }
+}
+```
+
 Next we will create a view with our auth functionality:
 
 _YourApp/lib/ui/view/auth/auth.dart_
@@ -70,14 +108,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:stockup/ui/view/auth/widgets/login.dart';
-import 'package:stockup/core/models/global.dart';
+import 'package:yourapp/ui/view/auth/widgets/login.dart';
 
 final FlutterAppAuth appAuth = FlutterAppAuth();
 final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
 
 // YourProject Api details
-const DOMAIN = 'your-api';
+const DOMAIN = '10.0.2.2:44349'; // 10.0.2.2 used here due to localhost cannot be resolved.
 const CLIENT_ID = 'YourProjectApi_App';
 const CLIENT_SECRET = "SomeSecretValue";
 
@@ -155,15 +192,6 @@ class _AuthState extends State<Auth> {
       await secureStorage.write(
           key: 'refresh_token', value: result.refreshToken);
 
-            // TODO Get picture and score from API
-      Globals.profile = ProfileInfo(
-          uuid: "123",
-          name: profile["userName"],
-          picture: null,
-          score: 0,
-          priceTargets: pricetargetMap);
-      Navigator.pushReplacementNamed(context, StockOverview.route);
-
       // This setstate is most likely not needed
       setState(() {
         isBusy = false;
@@ -226,34 +254,15 @@ class _AuthState extends State<Auth> {
 
 ```
 
-Next up we will create a simple widget with a button, that can handle the above login action:
 
-_YourApp/lib/ui/view/auth/widgets/login.dart_
+## Test
 
-```dart
-  
-import 'package:flutter/material.dart';
+With the above code implementation, we can now run our app in an Android emulator, and we should be able to have a login screen shown, when clicking on the "Login" button, and thus being able to login and being sent back to the app!
 
-class Login extends StatelessWidget {
-  final loginAction;
-  final String loginError;
+![login](https://user-images.githubusercontent.com/265719/116081653-d134b980-a69a-11eb-90ae-0049d31e730b.gif)
 
-  const Login(this.loginAction, this.loginError);
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        RaisedButton(
-          onPressed: () {
-            loginAction();
-          },
-          child: Text('Login'),
-        ),
-        Text(loginError ?? ''),
-      ],
-    );
-  }
-}
-```
+## Notes
+
+Getting connection issues? Be sure that your SSL certificate is trusted if using https.
+Other? Please send me a message, and I will get back to you.
