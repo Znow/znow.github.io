@@ -104,7 +104,8 @@ class Login extends StatelessWidget {
 }
 ```
 
-Next we will create a model for use in our auth:
+Next we will create a model for use in our auth. The model will hold the accessToken, which can be used in subsequent requests to the API.
+The model also holds some simple methods to retrieve users, and user details for the the user requesting.
 
 **YourApp/lib/core/models/yourapi_api.dart**
 
@@ -149,7 +150,10 @@ class YourProjectAPI {
 
 ```
 
-Next we will create a view with our auth functionality:
+Next we will create a view with our auth functionality. The main things to be aware of here is the constants: "DOMAIN", "CLIENT_ID", "CLIENT_SECRET" and "REDIRECT_URI".
+"CLIENT_ID", "CLIENT_SECRET" and "REDIRECT_URI" of course needs to be the same, defined previously in the API.
+
+The views sole purpose is to handle the "Login" button clicked, fire a request towards the API's authentication endpoint and retrieve token, which needs to be parsed, saved in securestorage and used in subsequent requests.
 
 **YourApp/lib/ui/view/auth/auth.dart**
 
@@ -318,6 +322,5 @@ When clicking on the "Login" button, a browser should open with a our well known
 
 ## Notes
 
-Getting connection issues? Be sure that your SSL certificate is trusted if using https.
-
-If any questions/thoughts/ideas/changes - Please send me a message, and I will get back to you.
+* Getting connection issues? Be sure that your SSL certificate is trusted if using https.
+* If any questions/thoughts/ideas/changes - Please send me a message, and I will get back to you.
