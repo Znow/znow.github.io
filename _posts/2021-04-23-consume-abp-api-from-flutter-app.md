@@ -310,6 +310,36 @@ class _AuthState extends State<Auth> {
 
 ```
 
+**YourApp/android/app/build.gradle**
+
+We also need the below line for Android configuration to let the app to be redirected back to
+
+```gradle
+android {
+    defaultConfig {
+        ...
+        manifestPlaceholders = [
+                'appAuthRedirectScheme': 'com.example.app'
+        ]
+    }
+}
+```
+
+And for IOS:
+
+```xml
+<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.example.app</string>
+			</array>
+		</dict>
+	</array>
+```
 
 ## Test
 
@@ -321,6 +351,7 @@ When clicking on the "Login" button, a browser should open with a our well known
 
 
 ## Notes
+Example repository: https://github.com/Znow/ConsumeAbpFromFlutterApp
 
 * Getting connection issues? Be sure that your SSL certificate is trusted if using https.
 * If any questions/thoughts/ideas/changes - Please send me a message, and I will get back to you.
