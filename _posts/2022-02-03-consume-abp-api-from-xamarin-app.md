@@ -55,7 +55,7 @@ if (!xamarinClientId.IsNullOrWhiteSpace())
 }
 ```
 
-The important part is the "password" in "grantTypes" array.
+The important part is the entry "password" in "grantTypes" array.
 
 Be sure to run your DbMigrator project to update your database with the new client defined above. Else our Xamarin app will not be able to authenticate and use the API endpoints.
 
@@ -63,48 +63,111 @@ Be sure to run your DbMigrator project to update your database with the new clie
 
 Remember to change "YourProject" with the right name of your project ;-)
 
-We need to add the "flutter_appauth" package from this repository https://github.com/MaikuB/flutter_appauth in the dependencies section in the pubspec file, as shown below:
+Let's add 2 entry fields and a login button to the MainPage.xaml:
 
-**YourApp/pubspec.yaml**
+**YourApp/MainPage.xaml**
+```xml
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="YourApp.MainPage">
 
-```yaml
-dependencies:
-  flutter:
-    sdk: flutter
-  flutter_appauth: ^0.9.1
+    <StackLayout>
+        <Entry Text="{Binding UserName, Mode=TwoWay}" 
+               Placeholder="Email" />
+            
+        <Entry Text="{Binding Password, Mode=TwoWay}" 
+               Placeholder="Password" 
+               IsPassword="True"/>
+        <Button Command="{Binding LoginCommand}" 
+                Text="Login" />
+    </StackLayout>
+
+</ContentPage>
+  
 ```
 
-Next up we will create a simple widget with a button, that can handle the upcoming login action:
+In the xaml codebehind class file please setup the BindingContext for our ViewModel
 
-**YourApp/lib/ui/view/auth/widgets/login.dart**
+**YourApp/MainPage.xaml.cs**
+```csharp
+using YourApp.ViewModels;
+using Xamarin.Forms;
 
-```dart
-  
-import 'package:flutter/material.dart';
+namespace YourApp
+{
+    public partial class MainPage : ContentPage
+    {
+        private readonly MainViewModel _viewModel;
+        public MainPage()
+        {
+            InitializeComponent();
+            BindingContext = _viewModel = new MainViewModel();
+        }
+    }
+}
 
-class Login extends StatelessWidget {
-  final loginAction;
-  final String loginError;
+```
 
-  const Login(this.loginAction, this.loginError);
+Now let's create the MainViewModel class in "ViewModels" folder:
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        RaisedButton(
-          onPressed: () {
-            loginAction();
-          },
-          child: Text('Login'),
-        ),
-        Text(loginError ?? ''),
-      ],
-    );
-  }
+
+**YourApp/ViewModels/MainViewModel.cs**
+```chsarp
+using System.Threading.Tasks;
+using YourApp.ViewModels;
+using YourApp.Services.Identity;
+using Xamarin.Forms;
+
+namespace YourApp.ViewModels
+{
+    public class MainViewModel : BaseViewModel
+    {
+        
+        private string _userName;
+        private string _password;
+        private bool _loading;
+        
+        IIdentityService IdentityService => DependencyService.Get<IIdentityService>();
+        
+        public Command LoginCommand { get; }
+
+        public MainViewModel()
+        {
+            LoginCommand = new Command(async () => await OnLoginClicked());
+        }
+        
+        public string UserName
+        {
+            get => _userName;
+            set => SetProperty(ref _userName, value);
+        }
+
+        public string Password
+        {
+            get => _password;
+            set => SetProperty(ref _password, value);
+        }
+        
+        private async Task OnLoginClicked()
+        {
+            var loginResult = await IdentityService.LoginAsync(UserName, Password);
+            if (!loginResult)
+            {
+                return;
+            }
+
+            // await Shell.Current.GoToAsync($"//{nameof(StartPage)}");
+        }
+    }
 }
 ```
+
+
+
+
+
+
 
 Next we will create a model for use in our auth. The model will hold the accessToken, which can be used in subsequent requests to the API.
 The model also holds some simple methods to retrieve users, and user details for the the user requesting.
