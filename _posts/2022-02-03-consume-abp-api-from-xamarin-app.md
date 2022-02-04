@@ -9,6 +9,8 @@ I will not go in much detail about the actual Xamarin code implementation neithe
 
 Nor can I be held responsible for any bugs, breaches or unaware use of packages.
 
+The code shown in for the Xamarin app is by inspiration from another project that I am working on.
+
 ## Requirements
 * Existing ABP API project with IdentityServer
 * Existing Xamarin Forms application
@@ -113,7 +115,8 @@ Now let's create the MainViewModel class in "ViewModels" folder:
 
 
 **YourApp/ViewModels/MainViewModel.cs**
-```chsarp
+
+```csharp
 using System.Threading.Tasks;
 using YourApp.ViewModels;
 using YourApp.Services.Identity;
@@ -164,247 +167,401 @@ namespace YourApp.ViewModels
 ```
 
 
+Our viewmodels inherit from a BaseViewModel which some generic helper methods to use:
 
+**YourApp/ViewModels/BaseViewModel.cs**
 
+```csharp
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using Xamarin.Essentials;
 
-
-
-Next we will create a model for use in our auth. The model will hold the accessToken, which can be used in subsequent requests to the API.
-The model also holds some simple methods to retrieve users, and user details for the the user requesting.
-
-**YourApp/lib/core/models/yourapi_api.dart**
-
-```dart
-import 'dart:convert';
-import 'dart:io';
-import 'package:http/http.dart';
-import 'package:http/http.dart' as http;
-
-
-class YourProjectAPI {
-  static String accessToken;
-  static const String _baseUrl =
-      "https://your-api/api";
-  static Map<String, String> headers = {
-    'Content-type': 'application/json',
-    'Accept': 'application/json',
-    HttpHeaders.authorizationHeader: "Bearer $accessToken",
-  };
-
-  static Future<Response> getUserDetails() async {
-    final url = '$_baseUrl/identity/my-profile';
-    final response = await http.get(
-      url,
-      headers: {HttpHeaders.authorizationHeader: "Bearer $accessToken"},
-    );
-
-    return response;
-  }
-
-  // Example API method call
-  static Future<List<User>> getUsers() async {
-    final response = await http.get("$_baseUrl/identity/users", headers: headers);
-
-    
-    if (response.statusCode == 200) {
-      // Logic here       
-    }
-    return response;
-  }
-}
-
-```
-
-Next we will create a view with our auth functionality. The main things to be aware of here is the constants: "DOMAIN", "CLIENT_ID", "CLIENT_SECRET" and "REDIRECT_URI".
-"CLIENT_ID", "CLIENT_SECRET" and "REDIRECT_URI" of course needs to be the same, defined previously in the API.
-
-The views sole purpose is to handle the "Login" button clicked, fire a request towards the API's authentication endpoint and retrieve token, which needs to be parsed, saved in securestorage and used in subsequent requests.
-
-**YourApp/lib/ui/view/auth/auth.dart**
-
-```dart
-import 'dart:convert';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_appauth/flutter_appauth.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:yourapp/ui/view/auth/widgets/login.dart';
-import 'package:yourapp/core/models/yourprojectapi_api.dart';
-
-final FlutterAppAuth appAuth = FlutterAppAuth();
-final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
-
-// YourProject Api details
-const DOMAIN = '10.0.2.2:44349'; // 10.0.2.2 used here due to localhost cannot be resolved.
-const CLIENT_ID = 'YourProjectApi_App';
-const CLIENT_SECRET = "SomeSecretValue";
-
-const REDIRECT_URI = 'com.example.app://callback';
-const ISSUER = 'https://$DOMAIN';
-
-class Auth extends StatefulWidget {
-  static const route = "/newauth";
-
-  @override
-  _AuthState createState() => _AuthState();
-}
-
-class _AuthState extends State<Auth> {
-  bool isBusy = false;
-  bool isLoggedIn = false;
-  String errorMessage;
-  String name;
-  String picture;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: isBusy
-            ? CircularProgressIndicator()
-            : Login(loginAction, errorMessage),
-      ),
-    );
-  }
-
-  Map<String, dynamic> parseIdToken(String idToken) {
-    final parts = idToken.split(r'.');
-    assert(parts.length == 3);
-
-    return jsonDecode(
-        utf8.decode(base64Url.decode(base64Url.normalize(parts[1]))));
-  }
-
-  getUserDetails() async {
-    var profileDetails = {};
-    YourProjectAPI.getUserDetails().then(
-      (response) {
-        if (response.statusCode == 200) {
-          profileDetails = jsonDecode(response.body);
-        } else {
-          throw Exception('Failed to get user details');
+namespace YourApp.ViewModels
+{
+    public class BaseViewModel : INotifyPropertyChanged
+    {
+        bool isBusy = false;
+        public bool IsBusy
+        {
+            get { return isBusy; }
+            set { SetProperty(ref isBusy, value); }
         }
-      },
-    );
-    return profileDetails;
-  }
 
-  Future<void> loginAction() async {
-    setState(() {
-      isBusy = true;
-      errorMessage = '';
-    });
+        string title = string.Empty;
+        public string Title
+        {
+            get { return title; }
+            set { SetProperty(ref title, value); }
+        }
 
-    try {
-      final AuthorizationTokenResponse result =
-          await appAuth.authorizeAndExchangeCode(
-        AuthorizationTokenRequest(CLIENT_ID, REDIRECT_URI,
-            clientSecret: CLIENT_SECRET,
-            issuer: 'https://$DOMAIN',
-            scopes: ["email", "openid", "profile", "role", "phone", "address"],
-            promptValues: ['login']),
-      );
+        protected bool SetProperty<T>(ref T backingStore, T value,
+            [CallerMemberName] string propertyName = "",
+            Action onChanged = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(backingStore, value))
+                return false;
 
-      // Set access token for application
-      YourProjectAPI.accessToken = result.accessToken;
+            backingStore = value;
+            onChanged?.Invoke();
+            OnPropertyChanged(propertyName);
+            return true;
+        }
 
-      final idToken = parseIdToken(result.idToken);
-      final profile = await getUserDetails();
-      await secureStorage.write(
-          key: 'refresh_token', value: result.refreshToken);
+        public async Task<bool> IsGrantedAsync(string permissionName)
+        {
+            bool.TryParse(await SecureStorage.GetAsync(permissionName), out bool result);
+            return result;
+        }
 
-      // This setstate is most likely not needed
-      setState(() {
-        isBusy = false;
-        isLoggedIn = true;
-        name = idToken['name'];
-        picture = profile['picture'];
-      });
-    } catch (e, s) {
-      print('login error: $e - stack: $s');
-      setState(() {
-        isBusy = false;
-        isLoggedIn = false;
-        errorMessage = e.toString();
-      });
+        public async Task<bool> IsAuthenticated()
+        {
+            return !string.IsNullOrEmpty(await SecureStorage.GetAsync("user_id")) || !string.IsNullOrEmpty(await SecureStorage.GetAsync("access_token"));
+        }
+
+        #region INotifyPropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            var changed = PropertyChanged;
+            if (changed == null)
+                return;
+
+            changed.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
     }
-  }
+}
 
-  @override
-  void initState() {
-    initAction();
-    super.initState();
-  }
+```
 
-  void initAction() async {
-    final storedRefreshToken = await secureStorage.read(key: 'refresh_token');
-    if (storedRefreshToken == null) return;
+Now we need to add the interfaces and classes for making HTTP requests towards our ABP API:
 
-    setState(() {
-      isBusy = true;
-    });
+**YourApp/Services/IHttpClientService.cs**
+This interface contains a method for making a Auth POST request towards our API:
 
-    try {
-      final response = await appAuth.token(TokenRequest(
-        CLIENT_ID,
-        REDIRECT_URI,
-        issuer: ISSUER,
-        refreshToken: storedRefreshToken,
-      ));
+```csharp
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
 
-      final idToken = parseIdToken(response.idToken);
-      final profile = await getUserDetails();
-
-      secureStorage.write(key: 'refresh_token', value: response.refreshToken);
-
-      setState(() {
-        isBusy = false;
-        isLoggedIn = true;
-        name = idToken['name'];
-        picture = profile['picture'];
-      });
-    } catch (e, s) {
-      print('error on refresh token: $e - stack: $s');
-      setState(() {
-        isBusy = false;
-        isLoggedIn = false;
-      });
+namespace YourApp.Services.Http
+{
+    public interface IHttpClientService<T, C> where T : class where C : class
+    {
+        Task<T> AuthPostAsync(string uri, string userName, string password);
     }
-  }
 }
 
 ```
 
-**YourApp/android/app/build.gradle**
+**YourApp/Services/HttpClientService.cs**
+And the implementation of the interface as shown below. 
 
-We also need the below line for Android configuration to let the app to be redirected back to
+```csharp
+using System;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Threading.Tasks;
+using Xamarin.Forms;
+using YourApp.Services.Identity;
+using System.Text.Json;
 
-```gradle
-android {
-    defaultConfig {
-        ...
-        manifestPlaceholders = [
-                'appAuthRedirectScheme': 'com.example.app'
-        ]
+namespace YourApp.Services.Http
+{
+    public class HttpClientService<T, C> : IHttpClientService<T, C> where T : class where C : class
+    {
+        public IIdentityService IdentityService => DependencyService.Get<IIdentityService>();
+        Lazy<HttpClient> _httpClient;
+        private async Task<string> GetAccessTokenAsync() => await IdentityService.GetAccessTokenAsync();
+
+        private JsonSerializerOptions Options => new JsonSerializerOptions
+        {
+            WriteIndented = true,
+            PropertyNameCaseInsensitive = true // this is the point
+        };
+
+        public async Task<T> AuthPostAsync(string uri, string userName, string password)
+        {
+            _httpClient = await GetHttpClientAsync();
+
+            var data = $"grant_type=password";
+            data += $"&username={userName}";
+            data += $"&password={password}";
+            data += $"&client_id={Global.Settings.IdentityServer.ClientId}";
+            data += $"&client_secret={Global.Settings.IdentityServer.ClientSecret}";
+            data += $"&scope={Global.Settings.IdentityServer.Scope}";
+            
+            var content = new StringContent(data, Encoding.UTF8, "application/x-www-form-urlencoded");
+
+            var response = await _httpClient.Value.PostAsync(uri, content);
+            response.EnsureSuccessStatusCode();
+
+            var stringResult = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<T>(stringResult, Options);
+            return result;
+        }
+
+        private HttpClientHandler GetHttpClientHandler()
+        {
+           ///////////////////////////////////////
+            // EXCEPTION : Javax.Net.Ssl.SSLHandshakeException: 'java.security.cert.CertPathValidatorException: Trust anchor for certification path not found.'
+            // SOLUTION :
+
+            var httpClientHandler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => { return true; }
+            };
+
+            return httpClientHandler;
+        }
+
+        private async Task<Lazy<HttpClient>> GetHttpClientAsync()
+        {
+            var accessToken = await GetAccessTokenAsync();
+            var httpClient = new Lazy<HttpClient>(() => new HttpClient(GetHttpClientHandler()));
+            httpClient.Value.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken ?? "");
+            return httpClient;
+        }
     }
 }
 ```
 
-And for IOS:
 
-```xml
-<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>com.example.app</string>
-			</array>
-		</dict>
-	</array>
+**YourApp/Services/IIdentityService.cs**
+
+```csharp
+using System.Threading.Tasks;
+
+namespace YourApp.Services.Identity
+{
+    public interface IIdentityService
+    {
+        Task<string> GetAccessTokenAsync();
+        Task<bool> LoginAsync(string userName, string password);
+        Task<bool> LogoutAsync();
+    }
+}
+
 ```
+
+**YourApp/Services/IdentityService.cs**
+
+```csharp
+using YourApp.Services.Http;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
+using Xamarin.Essentials;
+using Xamarin.Forms;
+
+namespace YourApp.Services.Identity
+{
+    public class IdentityService : IIdentityService
+    {
+        private const string AccessToken = "access_token";
+        private const string IdentityToken = "identity_token";
+        private const string UserId = "user_id";
+
+        // Get User by email
+        public IHttpClientService<IdentityUserDto, IdentityUserDto> HttpClient => DependencyService.Get<IHttpClientService<IdentityUserDto, IdentityUserDto>>();
+
+        public IHttpClientService<IdentityDto, IdentityDto> AuthHttpClient => DependencyService.Get<IHttpClientService<IdentityDto, IdentityDto>>();
+
+        public async Task<bool> LoginAsync(string userName, string password)
+        {
+            var loginResult = await AuthHttpClient.AuthPostAsync(Global.Settings.Api.TokenUri, userName, password);
+            
+            if (!string.IsNullOrEmpty(loginResult.error))
+            {
+                return false;
+            }
+            
+            await SecureStorage.SetAsync(AccessToken, loginResult.access_token);
+            
+            var customClaims = ExtractCustomClaims(loginResult.access_token);
+            
+            return true;
+        }
+
+        public JsonDocument ExtractCustomClaims(string accessToken)
+        {
+            var base64payload = accessToken.Split('.')[1];
+            base64payload =
+                base64payload.PadRight(base64payload.Length + (base64payload.Length * 3) % 4, '='); // add padding
+            var bytes = Convert.FromBase64String(base64payload);
+            var jsonPayload = Encoding.UTF8.GetString(bytes);
+            var claimsFromAccessToken = JsonDocument.Parse(jsonPayload);
+            return claimsFromAccessToken;
+        }
+
+        public async Task<string> GetAccessTokenAsync()
+        {
+            var accessToken = await SecureStorage.GetAsync(AccessToken);
+            if (!string.IsNullOrWhiteSpace(accessToken))
+            {
+                var handler = new JwtSecurityTokenHandler();
+                var jwtToken = handler.ReadJwtToken(accessToken);
+                var validTo = jwtToken.ValidTo;
+                if (validTo <= DateTime.Now.AddMinutes(5))
+                {
+                    // await LoginAsync();
+                }
+                else
+                {
+                    return accessToken;
+                }
+            }
+            else
+            {
+                // await LoginAsync();
+            }
+
+            return await SecureStorage.GetAsync(AccessToken);
+        }
+
+        public async Task<bool> LogoutAsync()
+        {
+            SecureStorage.Remove(AccessToken);
+            var idTokenHint = await SecureStorage.GetAsync(IdentityToken);
+            SecureStorage.Remove(IdentityToken);
+            SecureStorage.Remove(UserId);
+            SecureStorage.Remove("email");
+           
+            return true;
+        }
+    }
+
+    // Should be in it's own file (SRP)
+    public class IdentityDto
+    {
+        public string access_token { get; set; }
+        public int expires_in { get; set; }
+        public string token_type { get; set; }
+        public string scope { get; set; }
+        public string error { get; set; }
+        public string error_description { get; set; }
+    }
+
+    // Should be in it's own file (SRP)
+    public class IdentityUserDto
+    {
+        //public ExtraProperties extraProperties { get; set; }
+        public string id { get; set; }
+        public DateTime? creationTime { get; set; }
+        public string creatorId { get; set; }
+        public DateTime? lastModificationTime { get; set; }
+        public string lastModifierId { get; set; }
+        public bool isDeleted { get; set; }
+        public string deleterId { get; set; }
+        public DateTime? deletionTime { get; set; }
+        public string tenantId { get; set; }
+        public string userName { get; set; }
+        public string name { get; set; }
+        public string surname { get; set; }
+        public string email { get; set; }
+        public bool emailConfirmed { get; set; }
+        public string phoneNumber { get; set; }
+        public bool phoneNumberConfirmed { get; set; }
+        public bool lockoutEnabled { get; set; }
+        public DateTime? lockoutEnd { get; set; }
+        public string concurrencyStamp { get; set; }
+    }
+}
+```
+
+Now let's add a class that holds some basic settings that we can use in our previously shown class implementations:
+
+**YourApp/Global.cs**
+
+```csharp
+using System.Collections.Generic;
+
+namespace YourApp
+{
+    public class Global
+    {
+        public IdentityServer IdentityServer { get; }
+        public Api Api { get; }
+
+        public Global(IdentityServer identityServer, Api api)
+        {
+            IdentityServer = identityServer;
+            Api = api;
+        }
+
+        public static Global Settings { get; } = new Global(new IdentityServer(), new Api());
+    }
+
+    // Should be in it's own file (SRP)
+    public class IdentityServer 
+    {
+        public readonly string Authority = "https://localhost:44377";
+
+        public readonly string ClientId = "YourApp_Xamarin";
+        public readonly string Scope = "email openid profile role phone address YourApp";
+        public readonly string ClientSecret = "1q2w3e*";
+        public readonly string RedirectUri = "xamarinformsclients://callback";
+    }
+
+    // Should be in it's own file (SRP)
+    public class Api
+    {
+        private readonly string _apiEndpoint = "https://localhost:44377/api/";
+        public readonly string RegularEndpoint = "https://localhost:44377";
+        public string TokenUri => RegularEndpoint + "/connect/token";
+    }
+}
+
+```
+
+Lastly we need to register our service dependencies in the main App file:
+
+**YourApp/App.xaml.cs**
+
+```csharp
+using YourApp.Services.Http;
+using YourApp.Services.Identity;
+using Xamarin.Forms;
+
+namespace YourApp
+{
+    public partial class App : Application
+    {
+        public App()
+        {
+            InitializeComponent();
+            
+            DependencyService.Register<IdentityService>();
+            DependencyService.Register<HttpClientService<IdentityUserDto, IdentityUserDto>>();
+            DependencyService.Register<HttpClientService<IdentityDto, IdentityDto>>();
+
+            MainPage = new MainPage();
+        }
+
+        protected override void OnStart()
+        {
+        }
+
+        protected override void OnSleep()
+        {
+        }
+
+        protected override void OnResume()
+        {
+        }
+    }
+}
+
+```
+
 
 ## Test
 
