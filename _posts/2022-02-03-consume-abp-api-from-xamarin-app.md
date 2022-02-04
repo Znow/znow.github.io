@@ -565,15 +565,15 @@ namespace YourApp
 
 ## Test
 
-With the above code implementation, we can now run our app in an Android emulator, and we should be able to have a login screen shown.
+With the above code implementation, we can now run our app in an Android emulator, and we should be able to have our MainPage shown with 2 entry fields and a login button.
 
-When clicking on the "Login" button, a browser should open with a our well known login screen from the API project - and then let us login and be sent back to the app!
+Try to use the standard "admin" login credentials from ABP.
 
 ![login](https://user-images.githubusercontent.com/265719/116081653-d134b980-a69a-11eb-90ae-0049d31e730b.gif)
 
 
 ## Notes
-Example repository: https://github.com/Znow/ConsumeAbpFromFlutterApp
+Example repository: https://github.com/Znow/ConsumeAbpFromXamarinApp
 
 * Getting connection issues? Be sure that your SSL certificate is trusted if using https.
 * If any questions/thoughts/ideas/changes - Please send me a message, and I will get back to you.
