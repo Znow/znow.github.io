@@ -569,8 +569,6 @@ With the above code implementation, we can now run our app in an Android emulato
 
 Try to use the standard "admin" login credentials from ABP.
 
-![login](https://user-images.githubusercontent.com/265719/116081653-d134b980-a69a-11eb-90ae-0049d31e730b.gif)
-
 
 ## Notes
 Example repository: https://github.com/Znow/ConsumeAbpFromXamarinApp
